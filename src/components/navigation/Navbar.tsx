@@ -1,11 +1,15 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Wallet, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { WalletStatus } from "@/components/ui/wallet-status";
+import { useWallet } from "@/contexts/WalletContext";
 import { useState } from "react";
 
 export function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isConnected } = useWallet();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigation = [
@@ -48,10 +52,18 @@ export function Navbar() {
           {/* Actions */}
           <div className="flex items-center space-x-4">
             <ThemeToggle />
-            <Button variant="default" className="pulse-glow hidden sm:flex">
-              <Wallet className="w-4 h-4 mr-2" />
-              Connect Wallet
-            </Button>
+            {isConnected ? (
+              <WalletStatus />
+            ) : (
+              <Button 
+                variant="default" 
+                className="pulse-glow hidden sm:flex"
+                onClick={() => navigate('/auth')}
+              >
+                <Wallet className="w-4 h-4 mr-2" />
+                Connect Wallet
+              </Button>
+            )}
             
             {/* Mobile menu button */}
             <Button
@@ -83,10 +95,19 @@ export function Navbar() {
                   {item.name}
                 </Link>
               ))}
-              <Button variant="default" className="w-full mt-4">
-                <Wallet className="w-4 h-4 mr-2" />
-                Connect Wallet
-              </Button>
+              {!isConnected && (
+                <Button 
+                  variant="default" 
+                  className="w-full mt-4"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    navigate('/auth');
+                  }}
+                >
+                  <Wallet className="w-4 h-4 mr-2" />
+                  Connect Wallet
+                </Button>
+              )}
             </div>
           </div>
         )}

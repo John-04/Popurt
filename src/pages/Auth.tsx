@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Wallet, Mail, Lock, ArrowLeft, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FloatingBackground } from "@/components/ui/floating-background";
+import { useWallet } from "@/contexts/WalletContext";
+import { toast } from "@/hooks/use-toast";
 
 export default function Auth() {
+  const navigate = useNavigate();
+  const { connectWallet, isLoading: walletLoading } = useWallet();
   const [isLoading, setIsLoading] = useState(false);
 
   const walletOptions = [
@@ -18,12 +22,26 @@ export default function Auth() {
   ];
 
   const handleWalletConnect = async (walletName: string) => {
+    try {
+      await connectWallet(walletName);
+      // Navigate to dashboard on successful connection
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Wallet connection failed:', error);
+    }
+  };
+
+  const handleEmailAuth = (isSignUp: boolean = false) => {
     setIsLoading(true);
-    // Simulate wallet connection
+    // Simulate email authentication
     setTimeout(() => {
       setIsLoading(false);
-      // In real app, navigate to dashboard on success
-    }, 2000);
+      toast({
+        title: isSignUp ? "Account Created! 🎉" : "Welcome Back! 👋",
+        description: isSignUp ? "Your account has been created successfully." : "You've been signed in successfully.",
+      });
+      navigate('/dashboard');
+    }, 1500);
   };
 
   return (
@@ -63,7 +81,7 @@ export default function Auth() {
                     variant="outline"
                     className="w-full glass-card justify-start hover:scale-105 transition-all duration-300 relative"
                     onClick={() => handleWalletConnect(wallet.name)}
-                    disabled={isLoading}
+                    disabled={walletLoading || isLoading}
                   >
                     <span className="text-2xl mr-3">{wallet.icon}</span>
                     <span className="flex-1 text-left">{wallet.name}</span>
@@ -76,7 +94,7 @@ export default function Auth() {
                 ))}
               </div>
               
-              {isLoading && (
+              {(walletLoading || isLoading) && (
                 <div className="text-center py-4">
                   <div className="animate-spin w-6 h-6 border-2 border-primary border-t-transparent rounded-full mx-auto mb-2"></div>
                   <p className="text-sm text-foreground/70">Connecting wallet...</p>
@@ -110,9 +128,13 @@ export default function Auth() {
                       className="glass-card"
                     />
                   </div>
-                  <Button className="w-full pulse-glow">
+                  <Button 
+                    className="w-full pulse-glow" 
+                    onClick={() => handleEmailAuth(false)}
+                    disabled={isLoading}
+                  >
                     <Mail className="w-4 h-4 mr-2" />
-                    Sign In
+                    {isLoading ? 'Signing In...' : 'Sign In'}
                   </Button>
                 </TabsContent>
                 
@@ -144,9 +166,13 @@ export default function Auth() {
                       className="glass-card"
                     />
                   </div>
-                  <Button className="w-full pulse-glow">
+                  <Button 
+                    className="w-full pulse-glow"
+                    onClick={() => handleEmailAuth(true)}
+                    disabled={isLoading}
+                  >
                     <Lock className="w-4 h-4 mr-2" />
-                    Create Account
+                    {isLoading ? 'Creating Account...' : 'Create Account'}
                   </Button>
                 </TabsContent>
               </Tabs>

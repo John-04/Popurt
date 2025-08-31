@@ -3,12 +3,40 @@ import { TrendingUp, Wallet, Target, Plus, Eye, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { FloatingBackground } from "@/components/ui/floating-background";
+import { useWallet } from "@/contexts/WalletContext";
+import { toast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+  const { address } = useWallet();
   const [savingsProgress] = useState(67);
   const [totalSavings] = useState(2847.32);
   const [monthlyGoal] = useState(5000);
   const [totalSpent] = useState(8234.56);
+
+  const handleQuickAction = (action: string) => {
+    switch (action) {
+      case 'Add Savings':
+        toast({
+          title: "Savings Added! 💰",
+          description: "Your manual savings have been processed",
+        });
+        break;
+      case 'View Transactions':
+        navigate('/transactions');
+        break;
+      case 'Set Goals':
+        toast({
+          title: "Goals Updated! 🎯",
+          description: "Your savings goals have been updated",
+        });
+        break;
+      case 'Check Rewards':
+        navigate('/rewards');
+        break;
+    }
+  };
 
   const quickActions = [
     { icon: Plus, label: "Add Savings", color: "bg-success" },
@@ -33,6 +61,11 @@ export default function Dashboard() {
         <div className="mb-8 animate-fade-in-up">
           <h1 className="text-4xl font-bold mb-2">Welcome back! 👋</h1>
           <p className="text-foreground/70">Here's your savings overview for this month</p>
+          {address && (
+            <p className="text-sm text-foreground/50 mt-1">
+              Connected: {address.slice(0, 6)}...{address.slice(-4)}
+            </p>
+          )}
         </div>
 
         {/* Stats Grid */}
@@ -165,6 +198,7 @@ export default function Dashboard() {
                     variant="outline"
                     className="h-24 flex-col glass-card hover:scale-105 transition-all duration-300"
                     style={{ animationDelay: `${0.8 + index * 0.1}s` }}
+                    onClick={() => handleQuickAction(action.label)}
                   >
                     <div className={`w-8 h-8 rounded-lg ${action.color} flex items-center justify-center mb-2`}>
                       <action.icon className="w-4 h-4 text-white" />
@@ -183,6 +217,7 @@ export default function Dashboard() {
                 Small changes make a big difference!
               </p>
               <Button variant="outline" size="sm" className="w-full mt-4 glass-card">
+                <TrendingUp className="w-4 h-4 mr-2" />
                 Adjust Settings
               </Button>
             </div>

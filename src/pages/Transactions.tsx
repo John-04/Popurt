@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FloatingBackground } from "@/components/ui/floating-background";
+import { TransactionModal } from "@/components/ui/transaction-modal";
+import { toast } from "@/hooks/use-toast";
 
 export default function Transactions() {
   const [selectedToken, setSelectedToken] = useState("ETH");
@@ -64,6 +66,10 @@ export default function Transactions() {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
+    toast({
+      title: "Copied!",
+      description: "Address copied to clipboard",
+    });
   };
 
   return (
@@ -125,55 +131,19 @@ export default function Transactions() {
               <TabsContent value="send" className="space-y-6">
                 <div className="glass-card animate-fade-in-up">
                   <h2 className="text-xl font-semibold mb-6">Send Tokens</h2>
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Recipient Address</label>
-                      <Input 
-                        placeholder="0x... or ENS name" 
-                        className="glass-card"
-                      />
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium mb-2">Token</label>
-                        <select 
-                          className="w-full p-3 rounded-lg glass-card bg-transparent border"
-                          value={selectedToken}
-                          onChange={(e) => setSelectedToken(e.target.value)}
-                        >
-                          {tokens.map((token) => (
-                            <option key={token.symbol} value={token.symbol}>
-                              {token.symbol} - {token.balance}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-2">Amount</label>
-                        <Input 
-                          type="number" 
-                          placeholder="0.0" 
-                          className="glass-card"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="bg-glass-secondary/50 p-4 rounded-lg">
-                      <div className="flex justify-between text-sm">
-                        <span>Estimated Gas Fee:</span>
-                        <span>0.002 ETH (~$3.45)</span>
-                      </div>
-                      <div className="flex justify-between text-sm mt-1">
-                        <span>Total:</span>
-                        <span className="font-semibold">0.127 ETH</span>
-                      </div>
-                    </div>
-
-                    <Button className="w-full pulse-glow">
-                      <Send className="w-4 h-4 mr-2" />
-                      Send Transaction
-                    </Button>
+                  <div className="text-center py-8">
+                    <TransactionModal
+                      title="Send Transaction"
+                      description="Send tokens to any wallet address"
+                    >
+                      <Button className="pulse-glow text-lg px-8 py-4">
+                        <Send className="w-5 h-5 mr-2" />
+                        Open Send Modal
+                      </Button>
+                    </TransactionModal>
+                    <p className="text-sm text-foreground/70 mt-4">
+                      Click above to open the secure transaction modal
+                    </p>
                   </div>
                 </div>
               </TabsContent>
@@ -193,7 +163,14 @@ export default function Transactions() {
                       <Copy className="w-4 h-4" />
                     </Button>
                   </div>
-                  <Button variant="outline" className="glass-card">
+                  <Button 
+                    variant="outline" 
+                    className="glass-card"
+                    onClick={() => toast({
+                      title: "QR Code Saved! 📱",
+                      description: "QR code has been saved to your downloads",
+                    })}
+                  >
                     <Download className="w-4 h-4 mr-2" />
                     Save QR Code
                   </Button>
