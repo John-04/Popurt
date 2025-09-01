@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Send, Download, QrCode, Copy, Filter, Search, ArrowUpRight, ArrowDownLeft } from "lucide-react";
+import { Send, Download, QrCode, Copy, Filter, Search, ArrowUpRight, ArrowDownLeft, TrendingUp, Wallet, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -12,9 +12,9 @@ export default function Transactions() {
   const [walletAddress] = useState("0x742d35cc4...39f6a5");
   
   const tokens = [
-    { symbol: "ETH", name: "Ethereum", balance: "2.4567", icon: "⟠" },
-    { symbol: "USDC", name: "USD Coin", balance: "1,234.56", icon: "💵" },
-    { symbol: "USDT", name: "Tether", balance: "856.90", icon: "🟢" }
+    { symbol: "ETH", name: "Ethereum", balance: "2.4567", icon: TrendingUp },
+    { symbol: "USDC", name: "USD Coin", balance: "1,234.56", icon: Wallet },
+    { symbol: "USDT", name: "Tether", balance: "856.90", icon: Gift }
   ];
 
   const transactions = [
@@ -89,9 +89,11 @@ export default function Transactions() {
               <h2 className="text-xl font-semibold mb-4">Wallet Balance</h2>
               <div className="space-y-4">
                 {tokens.map((token) => (
-                  <div key={token.symbol} className="flex items-center justify-between p-3 rounded-lg bg-glass-secondary/50 hover:bg-glass-secondary transition-colors">
+                  <div key={token.symbol} className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors">
                     <div className="flex items-center space-x-3">
-                      <span className="text-2xl">{token.icon}</span>
+                      <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                        <token.icon className="w-4 h-4 text-primary" />
+                      </div>
                       <div>
                         <p className="font-medium">{token.symbol}</p>
                         <p className="text-sm text-foreground/70">{token.name}</p>
@@ -106,13 +108,13 @@ export default function Transactions() {
             {/* Wallet Address */}
             <div className="glass-card animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
               <h3 className="text-lg font-semibold mb-4">Your Address</h3>
-              <div className="flex items-center space-x-2 p-3 rounded-lg bg-glass-secondary/50">
+              <div className="flex items-center space-x-2 p-3 rounded-lg bg-muted/50">
                 <p className="font-mono text-sm flex-1">{walletAddress}</p>
                 <Button size="icon" variant="ghost" onClick={() => copyToClipboard(walletAddress)}>
                   <Copy className="w-4 h-4" />
                 </Button>
               </div>
-              <Button variant="outline" className="w-full mt-4 glass-card">
+              <Button variant="outline" className="w-full mt-4">
                 <QrCode className="w-4 h-4 mr-2" />
                 Show QR Code
               </Button>
@@ -122,14 +124,14 @@ export default function Transactions() {
           {/* Main Content */}
           <div className="lg:col-span-2">
             <Tabs defaultValue="send" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 glass mb-6">
+              <TabsList className="grid w-full grid-cols-3 mb-6">
                 <TabsTrigger value="send">Send</TabsTrigger>
                 <TabsTrigger value="receive">Receive</TabsTrigger>
                 <TabsTrigger value="history">History</TabsTrigger>
               </TabsList>
 
               <TabsContent value="send" className="space-y-6">
-                <div className="glass-card animate-fade-in-up">
+                <div className="card animate-fade-in-up">
                   <h2 className="text-xl font-semibold mb-6">Send Tokens</h2>
                   <div className="text-center py-8">
                     <TransactionModal

@@ -11,11 +11,11 @@ export default function SpendSave() {
   const [autoSaveEnabled, setAutoSaveEnabled] = useState(true);
 
   const spendingData = [
-    { category: "Food & Dining", amount: 342.56, saved: 34.26, icon: "🍽️", color: "bg-orange-500" },
-    { category: "Shopping", amount: 189.23, saved: 18.92, icon: "🛍️", color: "bg-purple-500" },
-    { category: "Transportation", amount: 156.78, saved: 15.68, icon: "🚗", color: "bg-blue-500" },
-    { category: "Entertainment", amount: 98.45, saved: 9.85, icon: "🎬", color: "bg-pink-500" },
-    { category: "Utilities", amount: 234.67, saved: 23.47, icon: "⚡", color: "bg-yellow-500" },
+    { category: "Food & Dining", amount: 342.56, saved: 34.26, icon: ShoppingCart },
+    { category: "Shopping", amount: 189.23, saved: 18.92, icon: ShoppingCart },
+    { category: "Transportation", amount: 156.78, saved: 15.68, icon: TrendingUp },
+    { category: "Entertainment", amount: 98.45, saved: 9.85, icon: Zap },
+    { category: "Utilities", amount: 234.67, saved: 23.47, icon: Settings },
   ];
 
   const recentTransactions = [
@@ -111,7 +111,9 @@ export default function SpendSave() {
                     style={{ animationDelay: `${0.2 + index * 0.1}s` }}
                   >
                     <div className="flex items-center space-x-3">
-                      <span className="text-2xl">{category.icon}</span>
+                      <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                        <category.icon className="w-4 h-4 text-primary" />
+                      </div>
                       <div>
                         <h3 className="font-medium">{category.category}</h3>
                         <p className="text-sm text-success">+${category.saved.toFixed(2)} saved</p>
@@ -229,7 +231,10 @@ export default function SpendSave() {
 
             {/* Savings Tip */}
             <div className="glass-card animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
-              <h2 className="text-lg font-semibold mb-3">💡 Pro Tip</h2>
+              <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                <Zap className="h-4 w-4 text-primary" />
+                Pro Tip
+              </h2>
               <p className="text-sm text-foreground/70 leading-relaxed">
                 Enable both round-ups and auto-save for maximum savings impact. 
                 You're currently saving {savePercentage[0]}% + round-ups on every purchase!

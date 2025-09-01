@@ -55,8 +55,11 @@ export default function Dashboard() {
     <div className="min-h-screen pt-20 p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Welcome back! 👋</h1>
+        <div className="mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2 flex items-center gap-3">
+            <TrendingUp className="h-8 w-8 text-primary" />
+            Welcome back!
+          </h1>
           <p className="text-muted-foreground">Here's your savings overview for this month</p>
           {address && (
             <p className="text-sm text-muted-foreground mt-1">
@@ -66,53 +69,53 @@ export default function Dashboard() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="card p-6 hover-lift group">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="card p-4 hover-lift group">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium text-muted-foreground">Total Savings</h3>
               <TrendingUp className="w-4 h-4 text-secondary group-hover:scale-110 transition-transform" />
             </div>
-            <p className="text-3xl font-bold gradient-text">${totalSavings.toLocaleString()}</p>
+            <p className="text-2xl font-bold gradient-text">${totalSavings.toLocaleString()}</p>
             <p className="text-sm text-secondary mt-1">+12.5% this month</p>
           </div>
 
-          <div className="card p-6 hover-lift group">
+          <div className="card p-4 hover-lift group">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium text-muted-foreground">Total Spent</h3>
               <Wallet className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
             </div>
-            <p className="text-3xl font-bold">${totalSpent.toLocaleString()}</p>
+            <p className="text-2xl font-bold">${totalSpent.toLocaleString()}</p>
             <p className="text-sm text-muted-foreground mt-1">This month</p>
           </div>
 
-          <div className="card p-6 hover-lift group">
+          <div className="card p-4 hover-lift group">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium text-muted-foreground">Avg. Save Rate</h3>
               <Target className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
             </div>
-            <p className="text-3xl font-bold">10.2%</p>
+            <p className="text-2xl font-bold">10.2%</p>
             <p className="text-sm text-primary mt-1">Per transaction</p>
           </div>
 
-          <div className="card p-6 hover-lift group">
+          <div className="card p-4 hover-lift group">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium text-muted-foreground">Rewards Earned</h3>
               <Gift className="w-4 h-4 text-secondary group-hover:scale-110 transition-transform" />
             </div>
-            <p className="text-3xl font-bold">247</p>
-            <p className="text-sm text-secondary mt-1">Crystal Points</p>
+            <p className="text-2xl font-bold">247</p>
+            <p className="text-sm text-secondary mt-1">Points</p>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6">
           {/* Savings Progress */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="card p-6">
-              <h2 className="text-xl font-semibold mb-6">Monthly Savings Goal</h2>
+            <div className="card p-5">
+              <h2 className="text-xl font-semibold mb-4">Monthly Savings Goal</h2>
               <div className="relative">
-                <div className="flex justify-center mb-8">
-                  <div className="relative w-48 h-48">
-                    <svg className="w-48 h-48 transform -rotate-90" viewBox="0 0 100 100">
+                  <div className="flex justify-center mb-6">
+                    <div className="relative w-40 h-40">
+                    <svg className="w-40 h-40 transform -rotate-90" viewBox="0 0 100 100">
                       <circle
                         cx="50"
                         cy="50"
@@ -140,32 +143,35 @@ export default function Dashboard() {
                       </defs>
                     </svg>
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="text-3xl font-bold gradient-text">{savingsProgress}%</span>
+                      <span className="text-2xl font-bold gradient-text">{savingsProgress}%</span>
                       <span className="text-sm text-muted-foreground">Complete</span>
                     </div>
                   </div>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold mb-1">${totalSavings.toLocaleString()} / ${monthlyGoal.toLocaleString()}</p>
-                  <p className="text-muted-foreground">Keep going! You're doing great 🎉</p>
+                  <p className="text-xl font-bold mb-1">${totalSavings.toLocaleString()} / ${monthlyGoal.toLocaleString()}</p>
+                  <p className="text-muted-foreground flex items-center justify-center gap-2">
+                    <Target className="h-4 w-4" />
+                    Keep going! You're doing great
+                  </p>
                 </div>
               </div>
             </div>
 
             {/* Recent Transactions */}
-            <div className="card p-6">
-              <h2 className="text-xl font-semibold mb-6">Recent Activity</h2>
+            <div className="card p-5">
+              <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
               <div className="space-y-4">
                 {recentTransactions.map((transaction, index) => (
                   <div 
                     key={transaction.id} 
-                    className="flex items-center justify-between p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors duration-200"
+                    className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors duration-200"
                   >
                     <div className="flex items-center space-x-3">
-                      <div className={`w-10 h-10 rounded-full ${transaction.type === 'spend' ? 'bg-primary/20' : 'bg-secondary/20'} flex items-center justify-center`}>
+                      <div className={`w-8 h-8 rounded-full ${transaction.type === 'spend' ? 'bg-primary/20' : 'bg-secondary/20'} flex items-center justify-center`}>
                         {transaction.type === 'spend' ? 
-                          <Wallet className="w-5 h-5 text-primary" /> : 
-                          <TrendingUp className="w-5 h-5 text-secondary" />
+                          <Wallet className="w-4 h-4 text-primary" /> : 
+                          <TrendingUp className="w-4 h-4 text-secondary" />
                         }
                       </div>
                       <div>
@@ -184,17 +190,17 @@ export default function Dashboard() {
 
           {/* Quick Actions */}
           <div className="space-y-6">
-            <div className="card p-6">
-              <h2 className="text-xl font-semibold mb-6">Quick Actions</h2>
-              <div className="grid grid-cols-2 gap-4">
+            <div className="card p-5">
+              <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
+              <div className="grid grid-cols-2 gap-3">
                 {quickActions.map((action, index) => (
                   <Button
                     key={action.label}
                     variant="outline"
-                    className="h-24 flex-col hover-lift"
+                    className="h-20 flex-col hover-lift"
                     onClick={() => handleQuickAction(action.label)}
                   >
-                    <div className={`w-8 h-8 rounded-xl ${action.color} flex items-center justify-center mb-2`}>
+                    <div className="w-8 h-8 rounded-xl gradient-primary flex items-center justify-center mb-2">
                       <action.icon className="w-4 h-4 text-white" />
                     </div>
                     <span className="text-xs text-center">{action.label}</span>
@@ -204,13 +210,21 @@ export default function Dashboard() {
             </div>
 
             {/* Savings Tips */}
-            <div className="card p-6">
-              <h2 className="text-lg font-semibold mb-4">💡 Savings Tip</h2>
+            <div className="card p-5">
+              <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-primary" />
+                Savings Tip
+              </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Increase your round-up percentage to 15% to reach your monthly goal faster. 
                 Small changes make a big difference!
               </p>
-              <Button variant="outline" size="sm" className="w-full mt-4">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full mt-4"
+                onClick={() => navigate('/spend-save')}
+              >
                 <TrendingUp className="w-4 h-4 mr-2" />
                 Adjust Settings
               </Button>
