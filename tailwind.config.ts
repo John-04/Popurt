@@ -23,8 +23,8 @@ export default {
 				mono: ['JetBrains Mono', 'monospace'],
 			},
 			colors: {
-				border: 'hsl(var(--glass-border))',
-				input: 'hsl(var(--glass-border))',
+				border: 'hsl(var(--border))',
+				input: 'hsl(var(--border))',
 				ring: 'hsl(var(--primary))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
@@ -32,25 +32,23 @@ export default {
 				/* Web3 Brand System */
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))',
-					glow: 'hsl(var(--primary-glow))'
+					foreground: 'hsl(var(--primary-foreground))'
 				},
-				success: {
-					DEFAULT: 'hsl(var(--success))',
-					foreground: 'hsl(var(--success-foreground))',
-					glow: 'hsl(var(--success-glow))'
-				},
-				web3: {
-					blue: 'hsl(var(--web3-blue))',
-					green: 'hsl(var(--web3-green))',
-					purple: 'hsl(var(--web3-purple))'
+				secondary: {
+					DEFAULT: 'hsl(var(--secondary))',
+					foreground: 'hsl(var(--secondary-foreground))'
 				},
 				
-				/* Glass System */
-				glass: {
-					DEFAULT: 'hsl(var(--glass-primary))',
-					secondary: 'hsl(var(--glass-secondary))',
-					border: 'hsl(var(--glass-border))'
+				/* Card System */
+				card: {
+					DEFAULT: 'hsl(var(--card))',
+					foreground: 'hsl(var(--card-foreground))'
+				},
+				
+				/* Muted Colors */
+				muted: {
+					DEFAULT: 'hsl(var(--muted))',
+					foreground: 'hsl(var(--muted-foreground))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -64,25 +62,16 @@ export default {
 				}
 			},
 			borderRadius: {
-				lg: 'var(--radius-large)',
+				lg: 'var(--radius-lg)',
 				md: 'var(--radius)',
-				sm: 'calc(var(--radius) - 4px)',
-				xl: '1.5rem',
-				'2xl': '2rem'
-			},
-			backdropBlur: {
-				xs: '2px',
-				'3xl': '64px'
-			},
-			backgroundImage: {
-				'gradient-primary': 'var(--gradient-primary)',
-				'gradient-glow': 'var(--gradient-glow)',
-				'gradient-glass': 'var(--gradient-glass)'
+				sm: 'calc(var(--radius) - 2px)',
+				xl: 'var(--radius-xl)',
+				'2xl': '1.5rem'
 			},
 			boxShadow: {
-				'glass': 'var(--shadow-glass)',
-				'hover': 'var(--shadow-hover)',
-				'glow': 'var(--shadow-glow)'
+				sm: 'var(--shadow-sm)',
+				md: 'var(--shadow-md)',
+				lg: 'var(--shadow-lg)'
 			},
 			transitionTimingFunction: {
 				'bounce': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',

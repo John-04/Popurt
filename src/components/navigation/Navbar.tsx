@@ -21,7 +21,7 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass backdrop-blur-xl">
+    <nav className="fixed top-0 left-0 right-0 z-50 header-glass">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -55,9 +55,9 @@ export function Navbar() {
             {isConnected ? (
               <WalletStatus />
             ) : (
-              <Button 
+                <Button 
                 variant="default" 
-                className="pulse-glow hidden sm:flex"
+                className="hidden sm:flex"
                 onClick={() => navigate('/auth')}
               >
                 <Wallet className="w-4 h-4 mr-2" />
@@ -69,7 +69,7 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden glass-card"
+              className="md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -80,7 +80,7 @@ export function Navbar() {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden animate-slide-in-right">
-            <div className="px-2 pt-2 pb-3 space-y-1 glass-card mt-2 mb-4">
+            <div className="px-2 pt-2 pb-3 space-y-1 card mt-2 mb-4">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
